@@ -1,0 +1,45 @@
+{% extends 'dappx/base.html' %}
+{% load static %}
+{% block body_block %}
+{% load mathfilters %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Base</title>
+
+
+</head>
+<body>
+<div class="container">
+  <div class="jumbotron" style="width: 1100px; height:500px; text-align: center; background: url('/static/image/buyuk.png') no-repeat;  background-size: 100%; opacity: 1;" > 
+    {% if product  %}
+        <h1>Details of {{product.name}}</h1>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container">
+  {% if product  %}
+  <div class="card">
+    <img src="{{product.image.url}}"alt ="" >
+    <h1>{{product.name}}</h1>
+    <p class="price">{{product.price}} tl</p>
+    {% if product.changedprice != product.price %}
+    <p class="discount_price ">DISCOUNTED PRICE: {{product.changedprice}} TL</p>
+    <p class="discount_price ">{{product.price|sub:product.changedprice}} TL Saved</p>
+    {% else %}
+    <p class="no_discount">DISCOUNTED PRICE: -</p>
+    <p class="no_discount">0 TL Saved</p>
+    {% endif %}
+    <p>Short description: {{product.ShortDesc}}</p>
+    <p>Details: {{product.LongDesc}}</p>
+    <p>
+      <form method='GET' action="{% url 'dappx:cart' pr_id=product.id %}"><button style="background: #d9534f;" type="submit" >Add to Cart</button></form>
+    </p>
+  </div>
+  {% endif %}
+</div>
+</body>
+<footer style="margin-bottom: 10em;"></footer>
+</html>
+{% endblock %}
